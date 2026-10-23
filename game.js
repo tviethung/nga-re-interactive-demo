@@ -21,6 +21,8 @@ function initCinema() {
   const choices = byId('choicesBox');
   const endingPanel = byId('endingPanel');
   const countdown = byId('countdownValue');
+  const countdownSeconds = byId('countdownSeconds');
+  const countdownProgress = byId('countdownProgress');
   const pauseButton = byId('btnPause');
   const muteButton = byId('btnMute');
   const rulesDialog = byId('rulesDialog');
@@ -115,6 +117,16 @@ function initCinema() {
     scene.clockId = null;
   }
 
+  function renderCountdown(scene) {
+    const seconds = String(Math.ceil(scene.remaining / 1000)).padStart(2, '0');
+    if (countdownSeconds.textContent !== seconds) {
+      countdownSeconds.textContent = seconds;
+      countdownProgress.setAttribute('aria-valuenow', String(Math.ceil(scene.remaining / 1000)));
+    }
+    countdown.style.setProperty('--time-left', String(scene.remaining / scene.clockDuration));
+    countdown.classList.toggle('is-urgent', scene.remaining <= 5000);
+  }
+
   function resumeClock(scene) {
     if (current !== scene || scene.paused || !scene.clockKind || scene.clockId !== null) return;
     scene.deadline = performance.now() + scene.remaining;
@@ -122,7 +134,7 @@ function initCinema() {
       scene.clockId = null;
       if (current !== scene || scene.paused) return;
       scene.remaining = Math.max(0, scene.deadline - performance.now());
-      if (scene.clockKind === 'choice') countdown.textContent = String(Math.ceil(scene.remaining / 1000)).padStart(2, '0');
+      if (scene.clockKind === 'choice') renderCountdown(scene);
       if (scene.remaining <= 0) {
         const kind = scene.clockKind;
         scene.clockKind = null;
@@ -139,6 +151,7 @@ function initCinema() {
     stopClock(scene);
     scene.clockKind = kind;
     scene.remaining = milliseconds;
+    scene.clockDuration = milliseconds;
     resumeClock(scene);
   }
 
@@ -273,7 +286,7 @@ function initCinema() {
     const scene = {
       node, phase: 'loading', paused: false, completed: false, choiceLocked: false,
       decisionOnly, posterMode, playRequest: 0, buffering: false,
-      clockId: null, clockKind: null, remaining: 0, deadline: 0,
+      clockId: null, clockKind: null, remaining: 0, clockDuration: 0, deadline: 0,
       events: new AbortController(), imageEvents: null
     };
     current = scene;
@@ -321,9 +334,9 @@ function initCinema() {
     choicePanel.hidden = false;
     countdown.hidden = levelId === 'forest';
     if (levelId !== 'forest') {
-      countdown.textContent = String(scene.node.timerSeconds || 5).padStart(2, '0');
-      countdown.setAttribute('aria-label', 'Số giây còn lại để lựa chọn');
-      startClock(scene, 'choice', (scene.node.timerSeconds || 5) * 1000);
+      const seconds = scene.node.timerSeconds || 15;
+      countdownProgress.setAttribute('aria-valuemax', String(seconds));
+      startClock(scene, 'choice', seconds * 1000);
     }
     renderState(scene);
     animate(choicePanel);

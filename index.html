@@ -232,7 +232,15 @@
             aria-labelledby="choiceQuestion"
             hidden
           >
-            <span class="countdown-value" id="countdownValue" hidden></span>
+            <div class="countdown-value" id="countdownValue" hidden>
+              <div class="countdown-heading">
+                <span>Thời gian lựa chọn</span>
+                <strong><span id="countdownSeconds">15</span><small>giây</small></strong>
+              </div>
+              <div class="countdown-track" id="countdownProgress" role="progressbar" aria-label="Thời gian còn lại để lựa chọn" aria-valuemin="0" aria-valuemax="15" aria-valuenow="15">
+                <div class="countdown-fill"></div>
+              </div>
+            </div>
             <h2 class="choice-question" id="choiceQuestion"></h2>
             <div class="choices-box" id="choicesBox"></div>
             <p class="choice-hint" id="choiceHint"></p>
