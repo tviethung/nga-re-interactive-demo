@@ -1123,3 +1123,48 @@ body[data-state="paused"] .countdown-value {
 .ending-panel h2:focus {
   outline: none;
 }
+.scene-lead {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(5, 9, 7, 0.78);
+  backdrop-filter: blur(5px);
+}
+.scene-lead-card {
+  padding: 24px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: rgba(25, 23, 31, 0.94);
+}
+.scene-lead h2 {
+  margin: 10px 0 16px;
+  font-size: 23px;
+  line-height: 1.35;
+}
+.scene-lead p {
+  font-size: 15px;
+  line-height: 1.8;
+}
+.scene-lead-time {
+  margin-top: 20px;
+  color: var(--accent);
+  font-size: 12px;
+}
+.scene-lead-time strong {
+  font-size: 20px;
+  font-variant-numeric: tabular-nums;
+}
+.scene-lead small {
+  display: block;
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 11px;
+}
+@media (max-width: 540px) {
+  .scene-lead { padding: 16px; }
+  .scene-lead-card { padding: 18px; max-height: 100%; overflow-y: auto; }
+  .scene-lead p { font-size: 14px; line-height: 1.75; }
+}

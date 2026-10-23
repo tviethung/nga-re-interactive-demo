@@ -23,6 +23,9 @@ function initCinema() {
   const countdown = byId('countdownValue');
   const countdownSeconds = byId('countdownSeconds');
   const countdownProgress = byId('countdownProgress');
+  const sceneLead = byId('sceneLead');
+  const sceneLeadText = byId('sceneLeadText');
+  const sceneLeadSeconds = byId('sceneLeadSeconds');
   const pauseButton = byId('btnPause');
   const muteButton = byId('btnMute');
   const rulesDialog = byId('rulesDialog');
@@ -135,10 +138,15 @@ function initCinema() {
       if (current !== scene || scene.paused) return;
       scene.remaining = Math.max(0, scene.deadline - performance.now());
       if (scene.clockKind === 'choice') renderCountdown(scene);
+      if (scene.clockKind === 'intro') {
+        const seconds = String(Math.ceil(scene.remaining / 1000));
+        if (sceneLeadSeconds.textContent !== seconds) sceneLeadSeconds.textContent = seconds;
+      }
       if (scene.remaining <= 0) {
         const kind = scene.clockKind;
         scene.clockKind = null;
         if (kind === 'choice') choose(scene, scene.node.defaultChoiceIndex ?? 0);
+        else if (kind === 'intro') startVideo(scene);
         else finishScene(scene);
         return;
       }
@@ -166,6 +174,7 @@ function initCinema() {
     video.pause();
     video.removeAttribute('src');
     video.load();
+    sceneLead.hidden = true;
     image.hidden = true;
     image.removeAttribute('src');
     choicePanel.hidden = true;
@@ -180,6 +189,7 @@ function initCinema() {
     if (current !== scene || scene.phase === 'error') return;
     stopClock(scene);
     scene.clockKind = null;
+    sceneLead.hidden = true;
     scene.phase = 'error';
     scene.playRequest++;
     video.pause();
@@ -229,6 +239,7 @@ function initCinema() {
   }
 
   function startVideo(scene) {
+    sceneLead.hidden = true;
     const source = new URL(scene.node.clipPath, document.baseURI).href;
     scene.phase = 'video';
     scene.buffering = true;
@@ -273,13 +284,24 @@ function initCinema() {
     requestPlayback(scene);
   }
 
+  function startSceneLead(scene) {
+    scene.phase = 'intro';
+    video.poster = scene.node.keyPath;
+    sceneLeadText.textContent = scene.node.ending
+      ? 'Lựa chọn đã được ghi nhận. Hãy xem kết thúc của câu chuyện.'
+      : scene.node.subtitle || '';
+    sceneLead.hidden = false;
+    renderState(scene);
+    startClock(scene, 'intro', 3000);
+  }
+
   function focusSceneTitle() {
     const title = byId('sceneTitle');
     title.tabIndex = -1;
     title.focus({preventScroll: true});
   }
 
-  function loadNode(id, decisionOnly = false, posterMode = false) {
+  function loadNode(id, decisionOnly = false, posterMode = false, skipIntro = false) {
     const node = levels[levelId].nodes[id];
     if (!node) return;
     disposeNode();
@@ -306,7 +328,8 @@ function initCinema() {
         renderState(scene);
         startClock(scene, 'poster', 3200);
       });
-    } else startVideo(scene);
+    } else if (levelId === 'barber' && !skipIntro) startSceneLead(scene);
+    else startVideo(scene);
   }
 
   function showChoices(scene) {
@@ -504,7 +527,7 @@ function initCinema() {
     loadNode(ending.retry || lastDecision || levels[levelId].start, Boolean(ending.retryWaiting), scene.posterMode);
   });
   byId('btnRetryVideo').addEventListener('click', () => {
-    if (current?.phase === 'error') loadNode(current.node.id, current.decisionOnly, current.posterMode);
+    if (current?.phase === 'error') loadNode(current.node.id, current.decisionOnly, current.posterMode, true);
   });
   pauseButton.addEventListener('click', () => {
     if (!current) return;
