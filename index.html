@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0c100f" />
+    <title>Ngã Rẽ — Những câu chuyện do bạn chọn</title>
+    <link rel="stylesheet" href="cinema.css" />
+  </head>
+  <body data-screen="library" data-theme="forest">
+    <div class="fog" aria-hidden="true"></div>
+    <div id="libraryView">
+      <header class="site-header">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true"
+            ><svg viewBox="0 0 24 24">
+              <path
+                d="M12 20V10M12 10 5 4M12 10l7-6M3 7l2-3 4 1M15 5l4-1 2 3"
+              /></svg
+          ></span>
+          <div>NGÃ RẼ<small>INTERACTIVE STORIES</small></div>
+        </div>
+        <button
+          class="quiet-button"
+          id="btnOpenStudio"
+          type="button"
+          aria-haspopup="dialog"
+        >
+          <svg aria-hidden="true" viewBox="0 0 24 24">
+            <rect x="3" y="5" width="18" height="14" rx="2" />
+            <path d="M8 5v14M16 5v14M3 10h5M16 14h5" /></svg
+          >Studio
+        </button>
+      </header>
+      <main class="library">
+        <section class="library-heading" aria-labelledby="libraryTitle">
+          <div class="eyebrow">HAI THẾ GIỚI · NHỮNG NGÃ RẼ KHÁC NHAU</div>
+          <h1 id="libraryTitle">
+            Một lựa chọn.<br /><em>Một câu chuyện khác.</em>
+          </h1>
+          <p>
+            Bước vào câu chuyện, xem điều gì xảy ra và tự chọn con đường của
+            bạn.
+          </p>
+        </section>
+        <section class="story-grid" aria-label="Chọn câu chuyện">
+          <article class="story-entry">
+            <button
+              class="story-card"
+              data-story="barber"
+              type="button"
+              aria-label="Chơi Level 1: Tiệm Dị Giới"
+            >
+              <div class="story-cover">
+                <img
+                  src="keyframes/KEY_00_HOOK.jpg"
+                  alt="Hai người thợ đón khách trước cửa tiệm trong đêm"
+                  fetchpriority="high"
+                /><span class="story-number">LEVEL 01</span
+                ><span class="story-genre">BÍ ẨN · SINH TỒN</span>
+              </div>
+              <div class="story-body">
+                <h2>Tiệm Dị Giới</h2>
+                <p class="story-description">
+                  Hai người thợ. Một tờ nội quy. Sau nửa đêm, vẻ ngoài không nói
+                  lên tất cả.
+                </p>
+                <div class="story-meta">
+                  <span>9 cảnh</span><span>4 kết thúc</span
+                  ><span>Lựa chọn có thời hạn</span>
+                </div>
+                <div class="story-action">
+                  <span class="story-progress" id="libraryProgress_barber"
+                    >Đã khám phá 0/4 kết thúc</span
+                  ><span class="story-play"
+                    >Bắt đầu
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M4 12h15M13 5l7 7-7 7" /></svg
+                  ></span>
+                </div>
+              </div>
+            </button>
+            <ul
+              class="discovery-list"
+              id="libraryEndings_barber"
+              aria-label="Kết thúc đã khám phá trong Tiệm Dị Giới"
+            ></ul>
+          </article>
+          <article class="story-entry">
+            <button
+              class="story-card"
+              data-story="forest"
+              type="button"
+              aria-label="Chơi Level 2: Rừng Sương"
+            >
+              <div class="story-cover">
+                <img
+                  src="keyframes/rung_suong/01.jpg"
+                  alt="Trứng vàng và trứng đá trên khúc gỗ giữa rừng sương"
+                  fetchpriority="high"
+                /><span class="story-number">LEVEL 02</span
+                ><span class="story-genre">PHIÊU LƯU · KỲ ẢO</span>
+              </div>
+              <div class="story-body">
+                <h2>Rừng Sương</h2>
+                <p class="story-description">
+                  Hai quả trứng giữa rừng sương. Một người bạn nhỏ. Bạn sẽ cùng
+                  ai trở về nhà?
+                </p>
+                <div class="story-meta">
+                  <span>9 cảnh</span><span>4 kết thúc</span
+                  ><span>Không giới hạn lựa chọn</span>
+                </div>
+                <div class="story-action">
+                  <span class="story-progress" id="libraryProgress_forest"
+                    >Đã khám phá 0/4 kết thúc</span
+                  ><span class="story-play"
+                    >Bắt đầu
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M4 12h15M13 5l7 7-7 7" /></svg
+                  ></span>
+                </div>
+              </div>
+            </button>
+            <ul
+              class="discovery-list"
+              id="libraryEndings_forest"
+              aria-label="Kết thúc đã khám phá trong Rừng Sương"
+            ></ul>
+          </article>
+        </section>
+        <footer class="library-footer">
+          <span>Video kể chuyện · Lựa chọn của bạn thay đổi kết thúc</span
+          ><span>Bản trải nghiệm / 02 câu chuyện</span>
+        </footer>
+      </main>
+    </div>
+    <main id="playerView" class="player" hidden>
+      <header class="player-toolbar">
+        <div class="player-nav">
+          <button
+            class="quiet-button"
+            type="button"
+            id="btnLibrary"
+            aria-label="Về danh sách câu chuyện"
+          >
+            <svg aria-hidden="true" viewBox="0 0 24 24">
+              <path d="m14 6-6 6 6 6" /></svg
+            >Câu chuyện</button
+          ><span class="player-story" id="storyLabel"></span>
+        </div>
+        <div class="player-actions" role="group" aria-label="Điều khiển phát">
+          <button
+            class="icon-button"
+            type="button"
+            id="btnPause"
+            aria-label="Tạm dừng"
+          >
+            <svg aria-hidden="true" viewBox="0 0 24 24">
+              <path class="pause-mark" d="M9 5v14M15 5v14" />
+              <path class="play-mark" d="m8 5 11 7-11 7z" /></svg
+            ><span data-label>Tạm dừng</span>
+          </button>
+          <button
+            class="icon-button"
+            type="button"
+            id="btnMute"
+            aria-label="Tắt âm thanh"
+            aria-pressed="false"
+          >
+            <svg aria-hidden="true" viewBox="0 0 24 24">
+              <path d="m11 5-6 4H2v6h3l6 4z" />
+              <path
+                class="sound-waves"
+                d="M15 8c2 2 2 6 0 8M18 5c4 4 4 10 0 14"
+              />
+              <path class="mute-mark" d="m16 9 5 6m0-6-5 6" /></svg
+            ><span data-label>Âm thanh</span>
+          </button>
+          <button
+            class="icon-button"
+            type="button"
+            id="btnRules"
+            aria-label="Xem cách chơi"
+            aria-haspopup="dialog"
+          >
+            <svg aria-hidden="true" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="9" />
+              <path
+                d="M9.5 9a2.5 2.5 0 0 1 5 0c0 2-2.5 2-2.5 4M12 16h.01"
+              /></svg
+            ><span>Cách chơi</span>
+          </button>
+          <button
+            class="icon-button"
+            type="button"
+            id="btnFullscreen"
+            aria-label="Toàn màn hình"
+          >
+            <svg aria-hidden="true" viewBox="0 0 24 24">
+              <path d="M8 3H3v5M16 3h5v5M21 16v5h-5M8 21H3v-5" /></svg
+            ><span>Toàn màn hình</span>
+          </button>
+        </div>
+      </header>
+      <div class="play-layout">
+        <section
+          class="cinematic-stage"
+          id="playerStage"
+          aria-label="Video câu chuyện"
+        >
+          <video id="povVideo" playsinline preload="metadata"></video>
+          <img
+            id="decisionImage"
+            class="decision-image"
+            alt="Khung hình chờ lựa chọn"
+            hidden
+          />
+          <div class="stage-shade" aria-hidden="true"></div>
+          <div class="timeline-track" aria-hidden="true">
+            <div class="timeline-fill" id="timelineFill"></div>
+          </div>
+          <div
+            class="video-status"
+            id="videoStatus"
+            role="status"
+            aria-live="polite"
+          ></div>
+          <section
+            class="choice-panel"
+            id="choicePanel"
+            aria-labelledby="choiceQuestion"
+            hidden
+          >
+            <span class="countdown-value" id="countdownValue" hidden></span>
+            <h2 class="choice-question" id="choiceQuestion"></h2>
+            <div class="choices-box" id="choicesBox"></div>
+            <p class="choice-hint" id="choiceHint"></p>
+          </section>
+          <section
+            class="ending-panel"
+            id="endingPanel"
+            aria-labelledby="endingTitle"
+            hidden
+          >
+            <div class="eyebrow">CÂU CHUYỆN KHÉP LẠI</div>
+            <h2 id="endingTitle"></h2>
+            <p id="endingDesc"></p>
+            <div class="ending-progress" id="endingProgress"></div>
+            <div class="ending-actions">
+              <button class="primary-button" id="btnRetryEnding" type="button">
+                Thử lựa chọn khác</button
+              ><button class="secondary-button" id="btnReplay" type="button">
+                Chơi lại từ đầu</button
+              ><button class="quiet-button" id="btnEndingLibrary" type="button">
+                Chọn câu chuyện khác
+              </button>
+            </div>
+          </section>
+          <section
+            class="playback-error"
+            id="playbackError"
+            role="alert"
+            hidden
+          >
+            <h2>Chưa phát được video</h2>
+            <p id="playbackErrorText"></p>
+            <button class="primary-button" id="btnRetryVideo" type="button">
+              Thử phát lại
+            </button>
+          </section>
+        </section>
+        <aside class="player-context">
+          <div class="eyebrow">BẠN ĐANG Ở TRONG CÂU CHUYỆN</div>
+          <h1 id="sceneTitle"></h1>
+          <p class="scene-subtitle" id="sceneSubtitle"></p>
+          <div class="context-note">
+            <strong>Xem. Lựa chọn. Khám phá.</strong><br />Lựa chọn sẽ xuất hiện
+            khi cảnh kết thúc.<br />Bạn có thể dùng phím 1 hoặc 2 để chọn.
+          </div>
+        </aside>
+      </div>
+    </main>
+    <p
+      class="storage-notice"
+      id="storageNotice"
+      role="status"
+      aria-live="polite"
+    ></p>
+    <dialog class="dialog" id="rulesDialog" aria-labelledby="rulesTitle">
+      <div class="dialog-header">
+        <h2 id="rulesTitle">Cách chơi</h2>
+        <form method="dialog">
+          <button class="icon-button" aria-label="Đóng cách chơi" autofocus>
+            <svg aria-hidden="true" viewBox="0 0 24 24">
+              <path d="m6 6 12 12M18 6 6 18" />
+            </svg>
+          </button>
+        </form>
+      </div>
+      <ol id="rulesList"></ol>
+    </dialog>
+    <dialog class="dialog" id="studioDialog" aria-labelledby="studioTitle">
+      <div class="dialog-header">
+        <div>
+          <div class="eyebrow">DÀNH CHO PHÁT TRIỂN</div>
+          <h2 id="studioTitle">Studio</h2>
+        </div>
+        <form method="dialog">
+          <button class="icon-button" aria-label="Đóng Studio" autofocus>
+            <svg aria-hidden="true" viewBox="0 0 24 24">
+              <path d="m6 6 12 12M18 6 6 18" />
+            </svg>
+          </button>
+        </form>
+      </div>
+      <div class="studio-fields">
+        <label
+          >Câu chuyện<select id="studioLevel">
+            <option value="barber">Level 1 · Tiệm Dị Giới</option>
+            <option value="forest">Level 2 · Rừng Sương</option>
+          </select></label
+        ><label>Phân cảnh<select id="studioNode"></select></label
+        ><label class="check-label"
+          ><input type="checkbox" id="studioPosterMode" />Chỉ xem ảnh tham chiếu
+          thay video</label
+        ><button class="primary-button" id="btnStudioJump" type="button">
+          Mở phân cảnh</button
+        ><label>Video<output id="studioClip"></output></label
+        ><label>Ảnh tham chiếu<output id="studioKeyframe"></output></label>
+        <details>
+          <summary>Prompt hình ảnh</summary>
+          <pre id="studioImagePrompt"></pre>
+        </details>
+        <details>
+          <summary>Prompt chuyển động</summary>
+          <pre id="studioMotionPrompt"></pre>
+        </details>
+      </div>
+    </dialog>
+    <script src="vendor/gsap.min.js"></script>
+    <script src="barber-level.js"></script>
+    <script src="forest-level.js"></script>
+    <script src="game.js"></script>
+  </body>
+</html>

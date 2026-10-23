@@ -1,0 +1,9 @@
+GSAP 3.13.0 (GreenSock Animation Platform)
+Copyright (c) 2008-2025, GreenSock. All rights reserved.
+
+Distribution: https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js
+Documentation: https://gsap.com/docs/v3/
+License: GreenSock standard "no charge" license, https://gsap.com/standard-license
+
+The copyright and license notice in gsap.min.js is retained. GSAP is not MIT-licensed.
+Only the core animation runtime is included; no ScrollTrigger, ScrollSmoother, or other optional plugins are bundled.
